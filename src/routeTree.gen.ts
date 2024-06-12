@@ -11,10 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ChatImport } from './routes/chat'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
+import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
+
+const ChatRoute = ChatImport.update({
+  path: '/chat',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   path: '/about',
@@ -23,6 +31,16 @@ const AboutRoute = AboutImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthVerifyOtpRoute = AuthVerifyOtpImport.update({
+  path: '/auth/verify-otp',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -44,11 +62,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/verify-otp': {
+      id: '/auth/verify-otp'
+      path: '/auth/verify-otp'
+      fullPath: '/auth/verify-otp'
+      preLoaderRoute: typeof AuthVerifyOtpImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, AboutRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  AboutRoute,
+  ChatRoute,
+  AuthLoginRoute,
+  AuthVerifyOtpRoute,
+})
 
 /* prettier-ignore-end */
