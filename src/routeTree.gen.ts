@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MessagesImport } from './routes/messages'
 import { Route as ChatImport } from './routes/chat'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
 import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
+
+const MessagesRoute = MessagesImport.update({
+  path: '/messages',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ChatRoute = ChatImport.update({
   path: '/chat',
@@ -69,6 +75,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatImport
       parentRoute: typeof rootRoute
     }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/login': {
       id: '/auth/login'
       path: '/auth/login'
@@ -92,6 +105,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AboutRoute,
   ChatRoute,
+  MessagesRoute,
   AuthLoginRoute,
   AuthVerifyOtpRoute,
 })

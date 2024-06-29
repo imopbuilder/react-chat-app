@@ -1,7 +1,13 @@
 import { create } from 'zustand';
 
-type State = {
-  chat: { email: string; message: string }[];
+export type State = {
+  chat: {
+    email: string;
+    message: {
+      me: string;
+      them: string;
+    }[];
+  }[];
   members: { email: string; status: 'offline' | 'online'; messages?: { value: string; from: string }[] }[];
   selectedMembers: { email: string } | null;
 };
